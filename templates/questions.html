@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Question 1{% endblock %}
+
+{% block content %}
+    <h3>Question {{ qnum }}</h2>
+    <!-- <h2>{{ question }}</h2> -->
+<form action="/answer" method="POST">
+    <h2>{{ question }}</h2>
+
+        <input type="radio" id="" name="answer" value="Yes" required>
+        <label for="Yes">Yes</label><br> 
+
+
+        <input type="radio" id="" name="answer" value="No">
+        <label for="No">No</label><br> 
+    
+    <br>
+
+    <form action="">
+        <button type="submit">Submit</button>
+    </form>
+</form>
+
+{% endblock %}
