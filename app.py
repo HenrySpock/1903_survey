@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, jsonify
+from flask import Flask, render_template, request, redirect, flash, jsonify, make_response, session
 from flask_debugtoolbar import DebugToolbarExtension 
 from surveys import satisfaction_survey as satsurv
 
@@ -24,6 +24,12 @@ def root():
     title = satsurv.title
     instr = satsurv.instructions
     resp = len(responses)
+    # session['username'] = 'Hot Rod'
+    # session['seekers'] = ['Starscream', 'Thundercracker', 'Skywarp']
+    print('***')
+    print(session["username"])
+    print(session["seekers"])
+    print('***')
     return render_template('home.html', title = title, instr = instr, id = resp)
 
 #Below is the working before checking for index out of bounds
@@ -76,3 +82,35 @@ def append_to_responses():
     # else:
     print(responses)
     return redirect(f"/questions/{len(responses)}")
+
+# ------------------------------- 
+# ------------------------------- 
+
+# Cookie demo 1 hard-coding
+# Basic route:
+# @app.route('/demo')
+# def res_demo():
+#     return "<h1>HELLO!!</h1>"
+
+# Same idea, but with response saved to a variable:
+# @app.route('/demo')
+# def res_demo():
+#     content = "<h1>HELLO!!</h1>"
+#     resp = make_response(content)
+#     resp.set_cookie('gummi1', 'blue')
+#     resp.set_cookie('gummi2', 'red') 
+#     return resp
+
+#Cookie demo 2 from form
+@app.route("/form-cookie")
+def show_form():
+    """Form that prompts favorite color."""
+    return render_template("form-cookie.html")
+
+@app.route("/handle-form-cookie")
+def handle_form():
+    fav_color = request.args["fav_color"]
+    html = render_template("response-cookie.html", fav_color=fav_color)
+    resp = make_response(html)
+    resp.set_cookie("fav_color", fav_color)
+    return resp

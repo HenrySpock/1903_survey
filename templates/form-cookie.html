@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Cookie Form{% endblock %}
+
+{% block content %}
+    <h1>Cookie Demo Start</h1>
+    <form action="/handle-form-cookie">
+        Favorite color?
+        <input name="fav_color" type="text">
+        <input type="submit">
+    </form>
+{% endblock %}
