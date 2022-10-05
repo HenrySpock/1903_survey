@@ -26,10 +26,10 @@ def root():
     resp = len(responses)
     # session['username'] = 'Hot Rod'
     # session['seekers'] = ['Starscream', 'Thundercracker', 'Skywarp']
-    print('***')
-    print(session["username"])
-    print(session["seekers"])
-    print('***')
+    # print('***')
+    # print(session["username"])
+    # print(session["seekers"])
+    # print('***')
     return render_template('home.html', title = title, instr = instr, id = resp)
 
 #Below is the working before checking for index out of bounds
@@ -53,8 +53,7 @@ def question01(respid):
     if respid != len(responses):
         print("Whoa nelly!")
         flash("Whoa Nelly!")
-    respid = len(responses)
-    question = satsurv.questions[respid].question
+    respid = len(responses) 
     print(respid)
     #The following line checks if the respid (which is based on the responses list) to the length of the 
     #list of questions defined in the class satisfaction_survey, which, if true, will always render
@@ -67,7 +66,7 @@ def question01(respid):
 
     else:
         print(respid, len(satsurv.questions))
-        # question = satsurv.questions[respid].question
+        question = satsurv.questions[respid].question
         """Take user to homepage of survey."""
         return render_template('questions.html', qnum=respid + 1, question = question)
 
