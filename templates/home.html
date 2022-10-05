@@ -5,7 +5,7 @@
 {% block content %}
     <h1>{{ title }}</h1>
     <h3>{{ instr }}</h3>
-    <form action="/questions/0">
+    <form action="/set_resp" method="POST">
         <button type="submit">Start Survey</button>
     </form>
 {% endblock %}

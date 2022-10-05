@@ -18,19 +18,37 @@ print("HelLO there.")
 @app.route("/")
 def root():
     """Take user to homepage of survey."""
-    print(responses)
-    responses.clear()
-    print(responses)
+    # print(responses)
+    # responses.clear()
+    # print(responses)
+    # if session.get("responses") != []:
+    #     print("responses: ", session["responses"])
     title = satsurv.title
     instr = satsurv.instructions
     resp = len(responses)
-    # session['username'] = 'Hot Rod'
-    # session['seekers'] = ['Starscream', 'Thundercracker', 'Skywarp']
-    # print('***')
-    # print(session["username"])
-    # print(session["seekers"])
-    # print('***')
-    return render_template('home.html', title = title, instr = instr, id = resp)
+    return render_template('home.html', title = title, instr = instr, id = resp) 
+
+@app.route("/set_resp", methods=["POST"])
+def setresp():
+    session["responses"] = responses
+    if len(session["responses"]) == 4:
+        print("The list has ", session["responses"], " answers. Thanks!")
+        return render_template('thanks.html')
+    # print("current sesh: ", session["responses"])
+    # if len(session["responses"]):
+        # return redirect("thanks.html")
+        # print("4 answers")
+    else:
+        print(responses)
+
+        responses.clear()
+        print(responses)
+
+        print("****")
+        print(responses)
+        # print(session["responses"])
+        print("****")
+        return redirect(f"/questions/{len(responses)}")
 
 #Below is the working before checking for index out of bounds
 # @app.route("/questions/<int:respid>")
@@ -65,6 +83,7 @@ def question01(respid):
         return redirect('questions.html', qnum=respid + 1, question = question)
 
     else:
+        print("responses: ", session["responses"])
         print(respid, len(satsurv.questions))
         question = satsurv.questions[respid].question
         """Take user to homepage of survey."""
@@ -74,8 +93,12 @@ def question01(respid):
 def append_to_responses():
     """saves response in responses[] and proceeds to next question."""
     answer = request.form['answer']
+    # sesh = session["responses"]
+    print("sesh before: ", session["responses"])
     responses.append(answer)
-
+    session["responses"] = responses
+    print("sesh after: ", session["responses"])
+    # print("session list: ", session["responses"])
     # if (len(responses) == len(survey.questions)):
     #     return redirect("/surv_complete")
     # else:
